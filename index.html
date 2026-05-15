@@ -565,20 +565,27 @@
             }
         }
 
-        // 預設金鑰機制與自動測試
-        const PREDEFINED_KEY = "AIzaSyAqkMGcW5FjBOcYKGVSyGkZL3a7kxK83QA";
+      // 1. 預設金鑰保持空白，避免 GitHub 偵測外流
+        const PREDEFINED_KEY = "";
+
+        // 2. 獲取本地儲存的金鑰
+        let savedKey = localStorage.getItem('my_gemini_key');
         
-        // 檢查並替換舊金鑰
-        const currentSavedKey = localStorage.getItem('my_gemini_key');
-        if(!currentSavedKey || currentSavedKey === "AIzaSyBGWnWEH9SUcMG1nx83KCY5CbTdfXApLQU") {
+        // 3. 如果本地沒金鑰且預設金鑰不為空，才進行設定（通常用於初次部署）
+        if ((!savedKey || savedKey === "") && PREDEFINED_KEY !== "") {
             localStorage.setItem('my_gemini_key', PREDEFINED_KEY);
+            savedKey = PREDEFINED_KEY;
         }
 
-        const savedKey = localStorage.getItem('my_gemini_key');
-        if(savedKey) {
-            verifyApiKey(savedKey, true); // 安靜驗證
+        // 4. 驗證與彈窗邏輯
+        if (savedKey && savedKey !== "") {
+            // 有金鑰，進行驗證
+            verifyApiKey(savedKey, true); 
         } else {
+            // 完全沒有金鑰，直接顯示輸入視窗
             apiModal.classList.remove('hidden');
+            apiStatusText.textContent = "WAIT";
+            apiStatusText.className = "text-yellow-500 text-sm font-sans font-black";
         }
 
         // 彈窗邏輯
