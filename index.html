@@ -8,84 +8,34 @@
     <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&family=Noto+Sans+TC:wght@500;700;900&family=Inter:wght@700&display=swap" rel="stylesheet">
-
     <style>
-        .doc-thumb canvas {
-            image-rendering: -webkit-optimize-contrast; 
-            image-rendering: crisp-edges;
-            display: block; width: 100%; height: 100%;
-        }
-
-        :root {
-            --mario-blue: #007bff; --mario-red: #e52521;
-            --mario-yellow: #fbd000; --mario-green: #43b047;
-        }
-
-        body {
-            font-family: 'Luckiest Guy', 'Noto Sans TC', sans-serif;
-            background-color: #ffd700;
-            background-image: 
-                linear-gradient(45deg, rgba(0,0,0,0.05) 25%, transparent 25%, transparent 75%, rgba(0,0,0,0.05) 75%),
-                linear-gradient(45deg, rgba(0,0,0,0.05) 25%, transparent 25%, transparent 75%, rgba(0,0,0,0.05) 75%);
-            background-size: 20px 20px; background-position: 0 0, 10px 10px;
-            min-height: 100vh; margin: 0; overflow-x: hidden; letter-spacing: 1px;
-        }
-
+        .doc-thumb canvas { image-rendering: -webkit-optimize-contrast; image-rendering: crisp-edges; display: block; width: 100%; height: 100%; }
+        :root { --mario-blue: #007bff; --mario-red: #e52521; --mario-yellow: #fbd000; --mario-green: #43b047; }
+        body { font-family: 'Luckiest Guy', 'Noto Sans TC', sans-serif; background-color: #ffd700; background-image: linear-gradient(45deg, rgba(0,0,0,0.05) 25%, transparent 25%, transparent 75%, rgba(0,0,0,0.05) 75%), linear-gradient(45deg, rgba(0,0,0,0.05) 25%, transparent 25%, transparent 75%, rgba(0,0,0,0.05) 75%); background-size: 20px 20px; background-position: 0 0, 10px 10px; min-height: 100vh; margin: 0; overflow-x: hidden; letter-spacing: 1px; }
         .data-font { font-family: 'Inter', 'Noto Sans TC', sans-serif !important; font-weight: 700; }
         .top-bar-red { background-color: #d32f2f; height: 16px; width: 100%; }
-
         .mario-text { -webkit-text-stroke: 2px #000; text-shadow: 0px 4px 0px #000, 0px 6px 4px rgba(0,0,0,0.3); color: white; }
         .mario-text-small { -webkit-text-stroke: 1.5px #000; text-shadow: 0px 2px 0px #000; color: white; }
-        .text-c-blue { color: var(--mario-blue); } .text-c-red { color: var(--mario-red); }
-        .text-c-yellow { color: var(--mario-yellow); } .text-c-green { color: var(--mario-green); }
-
-        .mario-panel {
-            background: linear-gradient(180deg, rgba(255, 255, 255, 0.6) 0%, rgba(255, 235, 100, 0.8) 100%);
-            border: 4px solid #fff; border-radius: 1rem;
-            box-shadow: 0 6px 0px rgba(0, 0, 0, 0.15), inset 0 2px 0 rgba(255,255,255,0.8);
-            backdrop-filter: blur(4px); transition: all 0.3s ease;
-        }
-
-        .mario-btn {
-            border: 3px solid #000; border-radius: 0.5rem;
-            box-shadow: 0 4px 0px #000; transition: all 0.1s;
-            text-transform: uppercase; font-family: 'Luckiest Guy', cursive;
-        }
+        .text-c-blue { color: var(--mario-blue); } .text-c-red { color: var(--mario-red); } .text-c-yellow { color: var(--mario-yellow); } .text-c-green { color: var(--mario-green); }
+        .mario-panel { background: linear-gradient(180deg, rgba(255, 255, 255, 0.6) 0%, rgba(255, 235, 100, 0.8) 100%); border: 4px solid #fff; border-radius: 1rem; box-shadow: 0 6px 0px rgba(0, 0, 0, 0.15), inset 0 2px 0 rgba(255,255,255,0.8); backdrop-filter: blur(4px); transition: all 0.3s ease; }
+        .mario-btn { border: 3px solid #000; border-radius: 0.5rem; box-shadow: 0 4px 0px #000; transition: all 0.1s; text-transform: uppercase; font-family: 'Luckiest Guy', cursive; }
         .mario-btn:active:not(:disabled) { transform: translateY(4px); box-shadow: 0 0px 0px #000; }
-        .mario-btn-red { background-color: var(--mario-red); color: white; }
-        .mario-btn-green { background-color: var(--mario-green); color: white; }
-
+        .mario-btn-red { background-color: var(--mario-red); color: white; } .mario-btn-green { background-color: var(--mario-green); color: white; }
         .mario-inset { background: rgba(255, 255, 255, 0.4); border: 2px solid rgba(255, 255, 255, 0.8); border-radius: 0.5rem; box-shadow: inset 0 4px 6px rgba(0,0,0,0.1); }
-
-        .q-block {
-            width: 64px; height: 64px; background: linear-gradient(135deg, #fceb5c, #f39c12);
-            border: 3px solid #8B4513; border-radius: 8px; position: relative;
-            box-shadow: 4px 4px 0 rgba(0,0,0,0.2); display: flex; align-items: center; justify-content: center;
-            font-size: 2.5rem; color: white; animation: block-bump 1.5s infinite alternate ease-in-out;
-        }
+        .q-block { width: 64px; height: 64px; background: linear-gradient(135deg, #fceb5c, #f39c12); border: 3px solid #8B4513; border-radius: 8px; position: relative; box-shadow: 4px 4px 0 rgba(0,0,0,0.2); display: flex; align-items: center; justify-content: center; font-size: 2.5rem; color: white; animation: block-bump 1.5s infinite alternate ease-in-out; }
         @keyframes block-bump { from { transform: translateY(0); } to { transform: translateY(-5px); } }
-
-        .doc-thumb {
-            width: 96px; height: 120px; background: white; border: 1px solid #000; border-radius: 8px;
-            box-shadow: 2px 2px 0 rgba(0,0,0,0.1); flex-shrink: 0; transition: transform 0.3s; overflow: hidden; 
-        }
+        .doc-thumb { width: 96px; height: 120px; background: white; border: 1px solid #000; border-radius: 8px; box-shadow: 2px 2px 0 rgba(0,0,0,0.1); flex-shrink: 0; transition: transform 0.3s; overflow: hidden; }
         .doc-thumb:hover { transform: scale(3.5); z-index: 50; border-color: #fbd000; box-shadow: 0 4px 12px rgba(0,0,0,0.5); }
         .doc-label { margin-top: 6px; font-size: 1.1rem; -webkit-text-stroke: 1px #000; color: white; text-shadow: 1px 1px 0 #000; }
-
         @keyframes scan-flash { 50% { border-color: #e52521; box-shadow: 0 0 25px #e52521; } }
         .anim-scan-panel { animation: scan-flash 0.5s infinite !important; }
-
         .wooden-stick { background: linear-gradient(180deg, #c47135 0%, #90471c 50%, #5e2808 100%); border: 4px solid #3E1602; border-radius: 25px; width: 120px; height: 48px; position: relative; }
         .offset-number { background: #fbd000; border: 3px solid #000; border-radius: 50%; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; color: white; -webkit-text-stroke: 1.5px #000; }
         .offset-btn { background-color: var(--mario-blue); color: white; border: 3px solid #000; border-radius: 50%; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; }
-
         .logo-text-wrapper { display: flex; align-items: flex-end; font-size: 6rem; line-height: 0.8; letter-spacing: -2px; }
         .logo-char { display: inline-block; transition: transform 0.3s; }
-        .logo-char:nth-child(1) { color: #00AEEF; transform: rotate(-6deg); }
-        .logo-char:nth-child(2) { color: #E52521; transform: rotate(4deg) translateY(-8px); }
-        .logo-char:nth-child(3) { color: #FBD000; transform: rotate(-4deg) translateY(4px); }
-        .logo-char:nth-child(4) { color: #43B047; transform: rotate(6deg); }
-        .logo-char:nth-child(5) { color: #00AEEF; transform: rotate(-5deg) translateY(6px); }
+        .logo-char:nth-child(1) { color: #00AEEF; transform: rotate(-6deg); } .logo-char:nth-child(2) { color: #E52521; transform: rotate(4deg) translateY(-8px); } .logo-char:nth-child(3) { color: #FBD000; transform: rotate(-4deg) translateY(4px); } .logo-char:nth-child(4) { color: #43B047; transform: rotate(6deg); } .logo-char:nth-child(5) { color: #00AEEF; transform: rotate(-5deg) translateY(6px); }
+        .btn-delete-item { width: 24px; height: 24px; background-color: var(--mario-red); color: white; border: 2px solid #000; border-radius: 4px; display: flex; align-items: center; justify-content: center; font-family: 'Luckiest Guy'; cursor: pointer; box-shadow: 2px 2px 0 #000; flex-shrink: 0; }
     </style>
 </head>
 <body>
@@ -98,72 +48,35 @@
             </div>
             <button id="btn-change-api" class="mario-btn mario-btn-red w-11 h-11 rounded-full flex items-center justify-center">⚙</button>
         </div>
-
         <div class="text-center mb-6 mt-8 md:mt-0">
-            <h1 class="text-5xl md:text-7xl mario-text tracking-widest uppercase">
-                <span class="text-c-blue">AI</span> <span class="text-c-red">PDF</span> <span class="text-c-green">MISSION</span>
-            </h1>
+            <h1 class="text-5xl md:text-7xl mario-text tracking-widest uppercase"><span class="text-c-blue">AI</span> <span class="text-c-red">PDF</span> <span class="text-c-green">MISSION</span></h1>
         </div>
-
         <div class="flex flex-col gap-4">
             <div class="mario-panel flex items-center p-4 cursor-pointer" id="drop-zone">
                 <input type="file" id="pdf-upload" accept="application/pdf" class="hidden" />
-                <div class="flex items-center gap-3">
-                    <div class="q-block">?</div>
-                </div>
-                <div class="flex-1 ml-6">
-                    <h2 class="text-3xl mario-text-small">LOADING AREA</h2>
-                    <div class="mario-inset h-8 w-full flex items-center px-4">
-                        <span class="data-font text-xs text-gray-600 uppercase">Drop PDF to start...</span>
-                    </div>
-                </div>
+                <div class="flex items-center gap-3"><div class="q-block">?</div></div>
+                <div class="flex-1 ml-6"><h2 class="text-3xl mario-text-small">LOADING AREA</h2><div class="mario-inset h-8 w-full flex items-center px-4"><span class="data-font text-xs text-gray-600 uppercase">Drop PDF to start the mission...</span></div></div>
             </div>
-
             <div class="mario-panel p-4 pb-8 opacity-50 grayscale transition-all" id="section-scanning">
                 <div class="flex justify-between items-center mb-4">
-                    <div class="flex items-center gap-6">
-                        <h2 class="text-3xl mario-text-small">SCANNING</h2>
-                        <div class="flex items-center gap-3 bg-white/50 px-3 py-1 rounded-full border-2 border-white">
-                            <button id="scan-dec" class="mario-text-small text-2xl">-</button>
-                            <span id="scan-count-display" class="data-font text-xl font-bold">3</span>
-                            <button id="scan-inc" class="mario-text-small text-2xl">+</button>
-                        </div>
-                    </div>
+                    <div class="flex items-center gap-6"><h2 class="text-3xl mario-text-small">SCANNING</h2><div class="flex items-center gap-3 bg-white/50 px-3 py-1 rounded-full border-2 border-white"><button id="scan-dec" class="mario-text-small text-2xl">-</button><span id="scan-count-display" class="data-font text-xl font-bold">3</span><button id="scan-inc" class="mario-text-small text-2xl">+</button></div></div>
                     <h2 class="text-3xl mario-text-small">STAGES: <span id="file-pages-val" class="text-c-green text-4xl">0</span></h2>
                 </div>
-                <div class="flex flex-1 flex-wrap justify-evenly items-center py-4 px-2 min-h-[120px] gap-y-4" id="preview-gallery">
-                    <span class="data-font text-gray-500 opacity-50 italic">AWAITING PDF...</span>
-                </div>
+                <div class="flex flex-1 flex-wrap justify-evenly items-center py-4 px-2 min-h-[120px] gap-y-4" id="preview-gallery"><span class="data-font text-gray-500 opacity-50 italic">AWAITING PDF...</span></div>
             </div>
-
             <div class="mario-panel p-4 px-6 hidden" id="panel-directory">
-                <div class="flex justify-between items-center mb-3">
-                    <h2 class="text-2xl mario-text-small">DIRECTORY</h2>
-                    <button id="btn-clean-dir" class="mario-btn mario-btn-green w-11 h-11 rounded-full text-[10px]">CLEAN</button>
-                </div>
+                <div class="flex justify-between items-center mb-3"><h2 class="text-2xl mario-text-small">DIRECTORY</h2><button id="btn-clean-dir" class="mario-btn mario-btn-green w-11 h-11 rounded-full text-[10px]">CLEAN</button></div>
                 <div class="mario-inset w-full p-4 flex flex-col gap-3 mb-4" id="directory-list"></div>
                 <div class="mt-2 bg-white/30 rounded-lg p-3 border-2 border-white/50 flex flex-col items-center">
-                    <h2 class="text-xl mario-text-small mb-2">OFFSET CALIBRATOR</h2>
-                    <div class="flex items-center gap-4">
-                        <button id="offset-dec" class="offset-btn">-</button>
-                        <div id="offset-stick" class="wooden-stick flex items-center justify-center">
-                            <div class="offset-number" id="offset-display">0</div>
-                        </div>
-                        <button id="offset-inc" class="offset-btn">+</button>
-                    </div>
+                    <h2 class="text-xl mario-text-small mb-2 uppercase">Offset Calibrator</h2>
+                    <div class="flex items-center gap-4"><button id="offset-dec" class="offset-btn">-</button><div id="offset-stick" class="wooden-stick flex items-center justify-center"><div class="offset-number" id="offset-display">0</div></div><button id="offset-inc" class="offset-btn">+</button></div>
                 </div>
             </div>
         </div>
-
         <div class="flex justify-center mt-8 pb-10">
-            <button id="btn-split-trigger" disabled class="start-logo-btn">
-                <div class="logo-text-wrapper mario-text">
-                    <span class="logo-char">S</span><span class="logo-char">T</span><span class="logo-char">A</span><span class="logo-char">R</span><span class="logo-char">T</span>
-                </div>
-            </button>
+            <button id="btn-split-trigger" disabled class="start-logo-btn"><div class="logo-text-wrapper mario-text"><span class="logo-char">S</span><span class="logo-char">T</span><span class="logo-char">A</span><span class="logo-char">R</span><span class="logo-char">T</span></div></button>
         </div>
     </div>
-
     <div id="api-modal" class="fixed inset-0 bg-black/60 flex items-center justify-center z-[100] hidden backdrop-blur-sm">
         <div class="mario-panel p-6 w-11/12 max-w-sm relative flex flex-col gap-4">
             <button id="btn-close-modal" class="absolute top-1 right-3 text-3xl font-black">&times;</button>
@@ -172,35 +85,23 @@
             <button id="btn-save-api" class="mario-btn mario-btn-green w-full py-2 text-xl border-4">CONNECT</button>
         </div>
     </div>
-
     <div id="toast" class="fixed bottom-10 left-1/2 -translate-x-1/2 px-10 py-4 bg-black text-white border-4 border-white rounded-full shadow-2xl flex items-center gap-6 text-2xl font-black transition-all hidden z-50">
-        <div class="w-6 h-8 bg-[#FBD000] border-2 border-black rounded-full animate-bounce"></div>
-        <span id="toast-msg" class="data-font tracking-widest uppercase">READY!</span>
+        <div class="w-6 h-8 bg-[#FBD000] border-2 border-black rounded-full animate-bounce"></div><span id="toast-msg" class="data-font tracking-widest uppercase">READY!</span>
     </div>
-
     <script>
         pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
-        
-        // --- 模型與金鑰安全設定 ---
         const GEMINI_MODEL = "gemini-3.1-flash-lite";
         const p1 = "AIzaSyC84ABDB"; const p2 = "naHGIlMFLnp1R"; const p3 = "cU4zGGFVDI7M4";
         const PREDEFINED_KEY = p1 + p2 + p3;
-
         const apiStatusText = document.getElementById('api-status-text');
         const apiModal = document.getElementById('api-modal');
         const modalApiInput = document.getElementById('modal-api-input');
-
-        // 音效引擎
         const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
         function playSfx(type) {
             const osc = audioCtx.createOscillator(); const gain = audioCtx.createGain();
             osc.connect(gain); gain.connect(audioCtx.destination);
-            if(type === 'coin') {
-                osc.frequency.setValueAtTime(987, audioCtx.currentTime); osc.frequency.setValueAtTime(1318, audioCtx.currentTime + 0.1);
-                gain.gain.setValueAtTime(0.1, audioCtx.currentTime); osc.start(); osc.stop(audioCtx.currentTime + 0.4);
-            }
+            if(type === 'coin') { osc.frequency.setValueAtTime(987, audioCtx.currentTime); osc.frequency.setValueAtTime(1318, audioCtx.currentTime + 0.1); gain.gain.setValueAtTime(0.1, audioCtx.currentTime); osc.start(); osc.stop(audioCtx.currentTime + 0.4); }
         }
-
         async function verifyApiKey(key, isSilent = false) {
             apiStatusText.textContent = "WAIT"; apiStatusText.className = "text-yellow-500 animate-pulse font-black";
             try {
@@ -214,24 +115,11 @@
                 if(!isSilent) notify("INVALID KEY!"); return false;
             }
         }
-
-        // 初始化檢查
         let savedKey = localStorage.getItem('my_gemini_key');
-        if (!savedKey || savedKey.length < 10) {
-            localStorage.setItem('my_gemini_key', PREDEFINED_KEY);
-            savedKey = PREDEFINED_KEY;
-        }
+        if (!savedKey || savedKey.length < 10) { localStorage.setItem('my_gemini_key', PREDEFINED_KEY); savedKey = PREDEFINED_KEY; }
         verifyApiKey(savedKey, true);
-
-        // UI 邏輯
         let currentPdfBytes = null; let chapters = []; let scanPageLimit = 3; let currentOffset = 0;
-
-        function notify(msg) {
-            playSfx('coin'); const t = document.getElementById('toast');
-            document.getElementById('toast-msg').textContent = msg;
-            t.classList.remove('hidden'); setTimeout(() => t.classList.add('hidden'), 2500);
-        }
-
+        function notify(msg) { playSfx('coin'); const t = document.getElementById('toast'); document.getElementById('toast-msg').textContent = msg; t.classList.remove('hidden'); setTimeout(() => t.classList.add('hidden'), 2500); }
         document.getElementById('drop-zone').onclick = () => document.getElementById('pdf-upload').click();
         document.getElementById('pdf-upload').onchange = async (e) => {
             const file = e.target.files[0]; if(!file) return;
@@ -241,54 +129,34 @@
             document.getElementById('section-scanning').classList.remove('opacity-50', 'grayscale');
             renderPreviews();
         };
-
         async function renderPreviews() {
-            const gallery = document.getElementById('preview-gallery');
-            gallery.innerHTML = '<div class="font-black animate-pulse uppercase">Sharpening...</div>';
+            const gallery = document.getElementById('preview-gallery'); gallery.innerHTML = '<div class="font-black animate-pulse uppercase">Sharpening...</div>';
             const pdf = await pdfjsLib.getDocument({ data: currentPdfBytes.slice() }).promise;
             gallery.innerHTML = '';
             for(let i=1; i<=Math.min(scanPageLimit, pdf.numPages); i++) {
-                const page = await pdf.getPage(i);
-                const vp = page.getViewport({ scale: 4.0 });
-                const canvas = document.createElement('canvas');
-                canvas.width = vp.width; canvas.height = vp.height;
-                canvas.style.width = "96px"; canvas.style.height = "120px";
+                const page = await pdf.getPage(i); const vp = page.getViewport({ scale: 4.0 });
+                const canvas = document.createElement('canvas'); canvas.width = vp.width; canvas.height = vp.height; canvas.style.width = "96px"; canvas.style.height = "120px";
                 await page.render({ canvasContext: canvas.getContext('2d'), viewport: vp, intent: 'print' }).promise;
-                const wrap = document.createElement('div');
-                wrap.className = 'flex flex-col items-center';
-                const thumb = document.createElement('div');
-                thumb.className = 'doc-thumb cursor-pointer'; thumb.appendChild(canvas);
-                thumb.onclick = () => runAi(i, thumb);
-                wrap.appendChild(thumb);
-                const label = document.createElement('span'); label.className = 'doc-label'; label.textContent = `P.${i}`;
-                wrap.appendChild(label); gallery.appendChild(wrap);
+                const wrap = document.createElement('div'); wrap.className = 'flex flex-col items-center';
+                const thumb = document.createElement('div'); thumb.className = 'doc-thumb cursor-pointer'; thumb.appendChild(canvas); thumb.onclick = () => runAi(i, thumb);
+                wrap.appendChild(thumb); const label = document.createElement('span'); label.className = 'doc-label'; label.textContent = `P.${i}`; wrap.appendChild(label); gallery.appendChild(wrap);
             }
         }
-
         async function runAi(pNum, el) {
-            const key = localStorage.getItem('my_gemini_key');
-            el.style.filter = 'brightness(0.5)';
-            document.getElementById('section-scanning').classList.add('anim-scan-panel');
+            const key = localStorage.getItem('my_gemini_key'); el.style.filter = 'brightness(0.5)'; document.getElementById('section-scanning').classList.add('anim-scan-panel');
             try {
-                const pdf = await pdfjsLib.getDocument({ data: currentPdfBytes.slice() }).promise;
-                const page = await pdf.getPage(pNum);
-                const vp = page.getViewport({ scale: 2.0 });
-                const canvas = document.createElement('canvas');
-                canvas.width = vp.width; canvas.height = vp.height;
-                await page.render({ canvasContext: canvas.getContext('2d'), viewport: vp }).promise;
+                const pdf = await pdfjsLib.getDocument({ data: currentPdfBytes.slice() }).promise; const page = await pdf.getPage(pNum); const vp = page.getViewport({ scale: 2.0 });
+                const canvas = document.createElement('canvas'); canvas.width = vp.width; canvas.height = vp.height; await page.render({ canvasContext: canvas.getContext('2d'), viewport: vp }).promise;
                 const base64 = canvas.toDataURL('image/jpeg', 0.8).split(',')[1];
                 const prompt = `你是一個專業助理。請提取目錄圖中的「單元名稱」與「頁碼」，忽略注音。格式：[{"name":"第X單元 標題","page":數字}]`;
                 const resp = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${key}`, {
                     method: 'POST', body: JSON.stringify({ contents: [{ parts: [{ text: prompt }, { inlineData: { mimeType: "image/jpeg", data: base64 } }] }] })
                 });
-                const res = await resp.json();
-                const json = JSON.parse(res.candidates[0].content.parts[0].text.match(/\[.*\]/s)[0]);
-                chapters = [...chapters, ...json].sort((a,b)=>a.page-b.page);
-                updateUI(); notify("CAPTURED!");
+                const res = await resp.json(); const json = JSON.parse(res.candidates[0].content.parts[0].text.match(/\[.*\]/s)[0]);
+                chapters = [...chapters, ...json].sort((a,b)=>a.page-b.page); updateUI(); notify("CAPTURED!");
             } catch(e) { notify("ERROR!"); }
             finally { el.style.filter = ''; document.getElementById('section-scanning').classList.remove('anim-scan-panel'); }
         }
-
         function updateUI() {
             document.getElementById('panel-directory').classList.toggle('hidden', chapters.length === 0);
             const list = document.getElementById('directory-list');
@@ -302,30 +170,21 @@
                 </div>`).join('');
             document.getElementById('btn-split-trigger').disabled = chapters.length === 0;
         }
-
         document.getElementById('scan-inc').onclick = () => { scanPageLimit++; document.getElementById('scan-count-display').textContent = scanPageLimit; renderPreviews(); };
         document.getElementById('scan-dec').onclick = () => { scanPageLimit = Math.max(1, scanPageLimit-1); document.getElementById('scan-count-display').textContent = scanPageLimit; renderPreviews(); };
         document.getElementById('offset-inc').onclick = () => { currentOffset = Math.min(5, currentOffset+1); document.getElementById('offset-display').textContent = currentOffset; };
         document.getElementById('offset-dec').onclick = () => { currentOffset = Math.max(-5, currentOffset-1); document.getElementById('offset-display').textContent = currentOffset; };
         document.getElementById('btn-clean-dir').onclick = () => { chapters = []; updateUI(); notify("CLEARED!"); };
-
         document.getElementById('btn-split-trigger').onclick = async () => {
-            const srcDoc = await PDFLib.PDFDocument.load(currentPdfBytes.slice());
-            notify("SPLITTING...");
+            const srcDoc = await PDFLib.PDFDocument.load(currentPdfBytes.slice()); notify("SPLITTING...");
             for(let i=0; i<chapters.length; i++) {
-                const ch = chapters[i];
-                const start = (ch.page + currentOffset) - 1;
-                let end = (i < chapters.length - 1) ? (chapters[i+1].page + currentOffset) - 2 : srcDoc.getPageCount() - 1;
+                const ch = chapters[i]; const start = (ch.page + currentOffset) - 1; let end = (i < chapters.length - 1) ? (chapters[i+1].page + currentOffset) - 2 : srcDoc.getPageCount() - 1;
                 if(start < 0 || start >= srcDoc.getPageCount()) continue;
-                const subDoc = await PDFLib.PDFDocument.create();
-                const copied = await subDoc.copyPages(srcDoc, Array.from({length: Math.max(1, end-start+1)}, (_, k) => start + k));
-                copied.forEach(p => subDoc.addPage(p));
-                const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([await subDoc.save()]));
-                a.download = `${ch.name}.pdf`; a.click();
+                const subDoc = await PDFLib.PDFDocument.create(); const copied = await subDoc.copyPages(srcDoc, Array.from({length: Math.max(1, end-start+1)}, (_, k) => start + k));
+                copied.forEach(p => subDoc.addPage(p)); const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([await subDoc.save()])); a.download = `${ch.name}.pdf`; a.click();
             }
             notify("COMPLETE!");
         };
-
         document.getElementById('btn-change-api').onclick = () => { apiModal.classList.remove('hidden'); modalApiInput.focus(); };
         document.getElementById('btn-close-modal').onclick = () => apiModal.classList.add('hidden');
         document.getElementById('btn-save-api').onclick = () => { verifyApiKey(modalApiInput.value.trim()); apiModal.classList.add('hidden'); };
